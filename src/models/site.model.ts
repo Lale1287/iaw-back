@@ -1,4 +1,5 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, hasMany} from '@loopback/repository';
+import {SubSite} from './sub-site.model';
 
 @model()
 export class Site extends Entity {
@@ -38,6 +39,8 @@ export class Site extends Entity {
   })
   document_extractor?: string;
 
+  @hasMany(() => SubSite)
+  subSites: SubSite[];
 
   constructor(data?: Partial<Site>) {
     super(data);
