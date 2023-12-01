@@ -1,6 +1,7 @@
 import {AuthenticationComponent, registerAuthenticationStrategy} from '@loopback/authentication';
 import {BootMixin} from '@loopback/boot';
-import {ApplicationConfig} from '@loopback/core';
+import {ApplicationConfig, createBindingFromClass} from '@loopback/core';
+import {CronComponent} from '@loopback/cron';
 import {RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {
@@ -11,6 +12,7 @@ import {ServiceMixin} from '@loopback/service-proxy';
 import path from 'path';
 import {JWTAuthenticationStrategy, JWTServiceProvider, KEY} from './authentication-strategies';
 import {MySequence} from './sequence';
+import {MyCronJob} from './utils/myCronJob';
 
 export {ApplicationConfig};
 
@@ -73,5 +75,7 @@ export class SssApplication extends BootMixin(
       security: [{bearerAuth: []}],
     });
 
+    this.component(CronComponent);
+    this.add(createBindingFromClass(MyCronJob));
   }
 }
